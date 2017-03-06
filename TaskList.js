@@ -7,7 +7,7 @@ import {
   View,
 } from 'react-native';
 
-import TaskRow from './TaskRow'
+import TaskRow from './TaskRow';
 
 const styles = StyleSheet.create({
     //use FlexBox for styling with flow layout
@@ -52,6 +52,15 @@ class TaskList extends Component {
         this.state = {
             dataSource: ds.cloneWithRows(props.todos),
         };
+    }
+
+    componentWillReceiveProps(nextProps) {
+        const dataSource = this
+            .state
+            .dataSource
+            .cloneWithRows(nextProps.todos);
+
+        this.setState({ dataSource });
     }
 
     //renderRow prop 
