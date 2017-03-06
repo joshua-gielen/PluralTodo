@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import {
   ListView,
   StyleSheet,
+  Text,
+  TouchableHighlight,
   View,
 } from 'react-native';
 
@@ -14,7 +16,26 @@ const styles = StyleSheet.create({
         paddingTop: 40,
         flex: 1,
         justifyContent: 'flex-start',
-    }
+    },
+
+    button: {
+        marginLeft: 20,
+        marginRight: 20,
+        marginBottom: 20,
+        height: 60,
+        borderColor: '#05A501',
+        borderWidth: 2,
+        backgroundColor: '#333',
+        justifyContent: 'center',
+        alignItems: 'center',
+        
+    },
+    buttonText: {
+        color: '#FAFAFA',
+        fontSize: 20,
+        fontWeight: '600',
+    },
+    
 });
 
 class TaskList extends Component {
@@ -49,13 +70,25 @@ class TaskList extends Component {
                     key={this.props.todos}
                     renderRow={this.renderRow.bind(this)}
                 />
+                <TouchableHighlight 
+                    onPress={this.props.onAddStarted}
+                    style={styles.button}
+                >
+                    <Text 
+                        style={styles.buttonText}
+                    >
+                        Add one  
+                    </Text>
+                </TouchableHighlight>
+
             </View>
         );
     }
 }
 
-//Prop validation for todos prop in TaskList
+//Prop validation for onAddStarted & todos prop in TaskList
 TaskList.propTypes = {
+    onAddStarted: React.PropTypes.func.isRequired,
     todos: React.PropTypes.arrayOf(React.PropTypes.object).isRequired,
 };
 
