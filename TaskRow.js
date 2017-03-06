@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {
   Text,
   StyleSheet,
+  TouchableHighlight,
   View,
 } from 'react-native';
 
@@ -21,22 +22,40 @@ const styles = StyleSheet.create({
     label: {
         fontSize: 20,
         fontWeight: '300',
-    }
+    },
+    doneButton: {
+        backgroundColor: '#EAEAEA',
+        borderRadius: 5,
+        padding: 5,
+    },
 });
 
 class TaskRow extends Component {
+    onDonePressed() {
+        this.props.onDone(this.props.todo);
+    }
+
     render() {
         return (
             <View style={styles.container}>
                 <Text
                     style={styles.label}
                 >{this.props.todo.task}</Text>
+
+                <TouchableHighlight
+                    onPress={this.onDonePressed.bind(this)}
+                    style={styles.doneButton}
+                >
+                    <Text>Done</Text>
+                </TouchableHighlight>
             </View>
         );
     }
 }
 //Shape prop type to validate for attributes on an object prop
+//prop validation to validated onAdd prop in TaskRow
 TaskRow.propTypes = {
+    onDone: React.PropTypes.func.isRequired,
     todo: React.PropTypes.shape({
         task: React.PropTypes.string.isRequired,
     }).isRequired,

@@ -40,6 +40,14 @@ class PluralTodo extends Component {
         this.nav.pop();
     }
 
+    onDone(todo) {
+        console.log('todo was completed: ', todo.task);
+
+        //filter out the todo from the todos in container before calling setState
+        const filteredTodos = this.state.todos.filter((filterTodo) => filterTodo !== todo);
+        this.setState({ todos: filteredTodos });
+    }
+
     //set how view is rendered
     configureScene() {
         return Navigator.SceneConfigs.FloatFromBottom;
@@ -58,6 +66,7 @@ class PluralTodo extends Component {
             default:
                 return (
                     <TaskList 
+                        onDone={this.onDone.bind(this)}
                         onAddStarted={this.onAddStarted.bind(this)}
                         todos={this.state.todos}
                     />
