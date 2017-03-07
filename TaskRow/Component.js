@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import {
-  Text,
   StyleSheet,
-  TouchableHighlight,
-  View,
 } from 'react-native';
+
+
+//import Render without specifying platform
+import Render from './Render';
 
 const styles = StyleSheet.create({
     container: {
@@ -36,21 +37,8 @@ class TaskRow extends Component {
     }
 
     render() {
-        return (
-            <View style={styles.container}>
-                <Text
-                    style={styles.label}
-                >{this.props.todo.task}</Text>
-
-                <TouchableHighlight
-                    onPress={this.onDonePressed.bind(this)}
-                    style={styles.doneButton}
-                >
-                    <Text>Done</Text>
-                </TouchableHighlight>
-            </View>
-        );
-    }
+        return Render.bind(this)(styles);
+    }    
 }
 //Shape prop type to validate for attributes on an object prop
 //prop validation to validated onAdd prop in TaskRow

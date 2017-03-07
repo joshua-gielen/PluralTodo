@@ -7,7 +7,7 @@ import {
   View,
 } from 'react-native';
 
-import TaskRow from './TaskRow';
+import TaskRow from './TaskRow/Component';
 
 const styles = StyleSheet.create({
     //use FlexBox for styling with flow layout
