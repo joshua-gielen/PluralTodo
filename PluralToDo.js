@@ -5,20 +5,16 @@ import {
 
 import TaskList from './TaskList';
 import TaskForm from './TaskForm';
+import store from './todoStore';
 
 class PluralTodo extends Component {
     constructor(props, context) {
         super(props, context);
-        this.state = {
-            todos: [
-                {
-                    task: 'Learn React Native',
-                },
-                {
-                    task: 'Learn Redux',
-                },
-            ],
-        };
+        this.state = store.getState();
+
+        store.subscribe(() => {
+            this.setState(store.getState());
+        });
     }
 
     onAddStarted() {
@@ -29,8 +25,12 @@ class PluralTodo extends Component {
 
     onAdd(task) {
         console.log('A task was added: ', task);
-        this.state.todos.push({ task, });
-        this.setState({ todos: this.state.todos });
+        //this.state.todos.push({ task, });
+        //this.setState({ todos: this.state.todos });
+        store.dispatch({
+            type: 'ADD_TODO',
+            task,
+        });
         this.nav.pop();
     }
 
@@ -44,8 +44,12 @@ class PluralTodo extends Component {
         console.log('todo was completed: ', todo.task);
 
         //filter out the todo from the todos in container before calling setState
-        const filteredTodos = this.state.todos.filter((filterTodo) => filterTodo !== todo);
-        this.setState({ todos: filteredTodos });
+        //const filteredTodos = this.state.todos.filter((filterTodo) => filterTodo !== todo);
+        //this.setState({ todos: filteredTodos });
+        store.dispatch({
+            type: 'DELETE_TODO',
+            todo,
+        });
     }
 
     //set how view is rendered
