@@ -5,7 +5,6 @@ import {
     StyleSheet,
     Text,
     TouchableHighlight,
-    View,
 } from 'react-native';
 
 const imageUrl = require('../assets/img/done.png');
@@ -39,7 +38,7 @@ export default function render(styles) {
 
         setTimeout(() => {
             this.onDonePressed();
-        }, 1000);       
+        }, 1000);     
     }
 
     return (
