@@ -47,8 +47,14 @@ class PluralTodo extends Component {
         //const filteredTodos = this.state.todos.filter((filterTodo) => filterTodo !== todo);
         //this.setState({ todos: filteredTodos });
         store.dispatch({
-            type: 'DELETE_TODO',
+            type: 'DONE_TODO',
             todo,
+        });
+    }
+
+    onToggle() {
+        store.dispatch({
+            type: 'TOGGLE_STATE',
         });
     }
 
@@ -64,14 +70,16 @@ class PluralTodo extends Component {
                 return (
                     <TaskForm
                         onAdd={this.onAdd.bind(this)}
-                        onCancel={this.onCancel.bind(this)} 
+                        onCancel={this.onCancel.bind(this)}
                     />
                 );
             default:
                 return (
-                    <TaskList 
+                    <TaskList
+                        filter={this.state.filter}
                         onDone={this.onDone.bind(this)}
                         onAddStarted={this.onAddStarted.bind(this)}
+                        onToggle={this.onToggle.bind(this)}
                         todos={this.state.todos}
                     />
                 );
@@ -83,7 +91,7 @@ class PluralTodo extends Component {
             <Navigator
                 configureScene={this.configureScene}
                 initialRoute={{ name: 'taskList', index: 0 }}
-                ref={((nav) => {  
+                ref={((nav) => {
                     this.nav = nav;
                 })}
                 renderScene={this.renderScene.bind(this)}

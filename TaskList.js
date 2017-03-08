@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import {
-  ListView,
-  StyleSheet,
-  Text,
-  TouchableHighlight,
-  View,
+    ListView,
+    StyleSheet,
+    Switch,
+    Text,
+    TouchableHighlight,
+    View,
 } from 'react-native';
 
 import TaskRow from './TaskRow/Component';
@@ -28,14 +29,26 @@ const styles = StyleSheet.create({
         backgroundColor: '#333',
         justifyContent: 'center',
         alignItems: 'center',
-        
+
     },
     buttonText: {
         color: '#FAFAFA',
         fontSize: 20,
         fontWeight: '600',
     },
-    
+    toggleRow: {
+        flexDirection: 'row',
+        padding: 10,
+    },
+    toggleSwitch: {
+
+    },
+    toggleText: {
+        fontSize: 20,
+        paddingLeft: 10,
+        paddingTop: 3,
+    }
+
 });
 
 class TaskList extends Component {
@@ -66,9 +79,9 @@ class TaskList extends Component {
     //renderRow prop 
     renderRow(todo) {
         return (
-            <TaskRow 
+            <TaskRow
                 onDone={this.props.onDone}
-                todo={todo} 
+                todo={todo}
             />
         );
     }
@@ -77,19 +90,34 @@ class TaskList extends Component {
     render() {
         return (
             <View style={styles.container}>
+                <View
+                    style={styles.toggleRow}
+                >
+
+                    <Switch
+                        onValueChange={this.props.onToggle}
+                        style={styles.toggleSwitch}
+                        value={this.props.filter !== 'pending'}
+                    />
+                    <Text
+                        style={styles.toggleText}
+                    >                        
+                        Showing {this.props.todos.length} {this.props.filter} todo(s)
+                    </Text>
+                </View>
                 <ListView
                     dataSource={this.state.dataSource}
                     key={this.props.todos}
                     renderRow={this.renderRow.bind(this)}
                 />
-                <TouchableHighlight 
+                <TouchableHighlight
                     onPress={this.props.onAddStarted}
                     style={styles.button}
                 >
-                    <Text 
+                    <Text
                         style={styles.buttonText}
                     >
-                        Add one  
+                        Add one
                     </Text>
                 </TouchableHighlight>
 
@@ -100,8 +128,10 @@ class TaskList extends Component {
 
 //Prop validation for onAddStarted & todos prop in TaskList
 TaskList.propTypes = {
+    filter: React.PropTypes.string.isRequired,
     onAddStarted: React.PropTypes.func.isRequired,
     onDone: React.PropTypes.func.isRequired,
+    onToggle: React.PropTypes.func.isRequired, 
     todos: React.PropTypes.arrayOf(React.PropTypes.object).isRequired,
 };
 
